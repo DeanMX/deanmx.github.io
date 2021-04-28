@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0 ,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="files/main.css">
+<link rel="stylesheet" type="text/css" href="files/center-both.css">
+<title>Test Plan Upgrade</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="cell" style="display: block">
+			<h2 id="stock_title"></h2>
+			<table border="0" align="center">
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>	
+				<tr>
+					<td style="text-align:right">Current</td>
+					<td style="text-align:left" id="stock_curr"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script>
+		/********************************************************************
+		 * Init: Get query parameter
+		 *******************************************************************/
+		function getParameterByName(name)
+		{
+			name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			results = regex.exec(location.search);
+			return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+		/********************************************************************
+		 * Init: Get hash parameter
+		 *******************************************************************/
+		function getHash()
+		{
+			return window.location.hash.substr(1) || '';
+		};
+
+		/********************************************************************
+		 * Init: Get Stock
+		 *******************************************************************/
+		function doGetTwStock(stockNumber)
+		{
+			var wsUri;
+			var noError = false; 
+			var self = this;
+			wsUri = 'https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_'+stockNumber+'.tw';
+			var runAsync = true;
+
+
+			$.ajax({
+				url: wsUri,
+				type: "GET",
+				dataType: 'json',
+				async: runAsync,
+				cache: false,
+				timeout: 60000,
+				success: function(Jdata)
+				{
+
+					if(Jdata['msgArray'] && Jdata['msgArray'][0])
+					{
+						var item = Jdata['msgArray'][0];
+						var strStockName = item['nf'] || '';
+						var strStockCurr = item['z'] || '';
+						var $domTitle = $('#stock_title');
+						var $domCurr = $('#stock_curr');
+
+						$domTitle.text(strStockName);
+						$domCurr.text(strStockCurr);
+					}
+
+				},
+				error: function(data, textStatus, jqXHR)
+				{
+					//machineError( Jdata['error'] );
+					alert(textStatus + ': ' + data.status + ' ' + data.statusText);
+
+				}
+
+			}); 
+			return noError;
+		};
+
+		var strStockNumber = getParameterByName(name) || '';
+		if(strStockNumber.length>0)
+			doGetTwStock(strStockNumber);
+	</script>
+</body>
+</html>
