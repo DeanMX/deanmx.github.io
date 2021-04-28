@@ -1,0 +1,138 @@
+/********************************************************************
+ * main.css
+ *
+ * Copyright (C) 2014-2017. WINTEC CONFIDENTIAL
+ * All rights reserved. No part of this program may be reproduced.
+ * Created By dean.yang
+ *
+ *******************************************************************/
+
+@Charset "UTF-8";
+
+@font-face {
+	/* no unicode-range; default to all characters */
+	font-family: MyFont;
+	src: local(Heiti TC), local(Microsoft JhengHei);
+}
+@font-face {
+	/* ASCII */
+	font-family: MyFontASCII;
+	unicode-range: U+0000-007F; 
+	src: local(Arial);
+	
+}
+@font-face {
+	/* Latin characters 專用 */
+	font-family: MyFontLatin;
+	unicode-range: U+0080-024F;  /* Latin, Latin1 Sup., Ext-A, Ext-B */
+	src: local(Helvetica),/* OS X preferred */
+	local(Arial);/* Other OS */
+}
+
+
+@font-face {
+	/* 注音符號專用 */
+	font-family: MyFontJuIn; 
+	unicode-range: U+3100-312F;     /* Bopomofo */
+	src: local(LiHei Pro),/* OS X */
+	local(Microsoft JhengHei);*//* Other OS */
+}
+
+
+body, div, p, div, td, span{
+	-webkit-text-size-adjust:100%;
+	padding:0 0 0 0;
+	margin:0 0 0 0;
+
+}
+
+table{
+	-webkit-text-size-adjust:100%;
+	padding:0 0 0 0;
+
+}
+
+html, body, form{
+	width: 100%;
+	height: 100%;
+	font-size:14pt;
+	font-family:MyFontASCII,MyFontLatin,MyFontJuIn,MyCustomFont,Microsoft JhengHei,Arial;
+}
+
+h1, h2, h3, h4, h5, h6, table, tbody, tfoot, thead, tr, td , th, div, input{
+	font-family:MyFontASCII,MyFontLatin,MyFontJuIn,MyCustomFont,Microsoft JhengHei,Arial;
+}
+
+td{
+	padding-left: 5px;
+	padding-right: 5px;
+}
+input{
+	min-width: 200px;
+}
+td, input{
+	font-size: 14pt;
+}
+
+
+body{
+	color:#FFFFFF;
+	background-color:#101010;
+	background-image:url('back.png');
+	background-repeat: repeat;
+}
+
+
+/* 未連結 */
+a:link{
+	color: #A0A0FF;
+}
+/* 已連結過 */
+a:visited{
+	color: #9090FF;
+}
+/* 滑鼠移至連結 */
+a:hover{
+	color: #00FF00;
+}
+/* 選擇的連結 */
+a:active{
+	color: #0000FF;
+}
+
+div#copyright{
+	z-index: 9000;
+	cursor: default;
+
+	position: fixed;
+	right: 3px;
+	bottom: 0px;
+
+	color: rgba(255,255,255,0.2);
+	font-size: 8pt;
+	font-style: italic;
+	
+}
+
+.unselectable{
+	user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+}
+
+
+/* iPhone < 5: */
+@media screen and (device-aspect-ratio: 2/3){
+
+}
+
+/* iPhone 5: */
+@media screen and (device-aspect-ratio: 40/71){
+
+}
+
+/* iPad: */
+@media screen and (device-aspect-ratio: 3/4){
+
+}
