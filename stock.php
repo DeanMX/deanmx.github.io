@@ -13,6 +13,35 @@ $stock = $_GET['stock'];
 
 function getData($stock, $type='tse')
 {
+	/*
+	http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=(tse|otc)_SYMBOL.tw_YYYYMMDD&json=1&delay=0
+
+	(tse|otc): 若是上市使用tse，若是上櫃則使用otc, 注意左右括號要拿掉
+	SYMBOL:則是4碼或6碼的股票代號
+	YYYYMMDD：則是當日日期
+	
+	回傳的JSON欄位說明
+	z	當盤成交價
+	tv	當盤成交量
+	v	累積成交量
+	b	揭示買價(從高到低，以_分隔資料)
+	g	揭示買量(配合b，以_分隔資料)
+	a	揭示賣價(從低到高，以_分隔資料)
+	f	揭示賣量(配合a，以_分隔資料)
+	o	開盤
+	h	最高
+	l	最低
+	y	昨收
+	u	漲停價
+	w	跌停價
+	tlong	epoch毫秒數
+	d	最近交易日期(YYYYMMDD)
+	t	最近成交時刻(HH:MI:SS)
+	c	股票代號
+	n	公司簡稱
+	nf	公司全名
+	*/
+
 	$url = 'https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch='.$type.'_'.$stock.'.tw&json=1&delay=0';
 	$userAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36';
 	$http_header[] = "Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7";
