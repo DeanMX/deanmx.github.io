@@ -11,7 +11,7 @@
 <?php
 $stock = $_GET['stock'];
 $url = 'https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_'.$stock.'.tw&json=1';
-$userAgent = $_SERVER['HTTP_USER_AGENT'];
+$userAgent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36';
 $http_header[] = "Accept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7";
 echo '<a target="_blank" href='.$url.'>'.$url.'</a><br>';
 /* initial the curl object */
@@ -35,17 +35,22 @@ if(isset($error_msg))
 	echo "\$error_msg=$error_msg<br>";
 $json = json_decode($contents, true);
 $data = $json['msgArray'][0];
+$strStockName = htmlspecialchars($data['n'], ENT_COMPAT);
+$strStockNum = $data['c'];
+$strStockValPrev = $data['y'];
+$strStockValCurr = $data['z'];
+$strStockVal = ($strStockValCurr=='-')?$strStockValPrev:$strStockValCurr;
 ?>
 	<div id="wrap">
 		<div id="cell" style="display: block">
-			<h2 id="stock_title"><?=$data['n']?>(<?=$data['c']?>)</h2>
+			<h2 id="stock_title"><?=$strStockName;?>(<?=$strStockNum;?>)</h2>
 			<table border="0" align="center">
 				<tr>
 					<td colspan="2">&nbsp;</td>
 				</tr>	
 				<tr>
 					<td style="text-align:right">Current</td>
-					<td style="text-align:left" id="stock_curr"><?=$data['z']?></td>
+					<td style="text-align:left" id="stock_curr"><?=$strStockVal?></td>
 				</tr>
 			</table>
 		</div>
